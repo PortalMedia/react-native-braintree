@@ -38,9 +38,41 @@ RCT_EXPORT_METHOD(showPayPalModule: (NSDictionary *)options
             return;
         }
         [self.dataCollector collectDeviceData:^(NSString * _Nonnull deviceData) {
-            resolve(@{@"deviceData": deviceData,
-                      @"email": tokenizedPayPalAccount.email,
-                      @"nonce": tokenizedPayPalAccount.nonce,});
+            NSMutableDictionary *billingAddressDictionary = [NSMutableDictionary dictionary];
+            if (tokenizedPayPalAccount.billingAddress) {
+                [billingAddressDictionary addEntriesFromDictionary:@{
+                    @"countryCodeAlpha2": tokenizedPayPalAccount.billingAddress.countryCodeAlpha2 ?: [NSNull null],
+                    @"extendedAddress": tokenizedPayPalAccount.billingAddress.extendedAddress ?: [NSNull null],
+                    @"locality": tokenizedPayPalAccount.billingAddress.locality ?: [NSNull null],
+                    @"postalCode": tokenizedPayPalAccount.billingAddress.postalCode ?: [NSNull null],
+                    @"recipientName": tokenizedPayPalAccount.billingAddress.recipientName ?: [NSNull null],
+                    @"region": tokenizedPayPalAccount.billingAddress.region ?: [NSNull null],
+                    @"streetAddress": tokenizedPayPalAccount.billingAddress.streetAddress ?: [NSNull null],
+                }];
+            }
+            NSMutableDictionary *shippingAddressDictionary = [NSMutableDictionary dictionary];
+            if (tokenizedPayPalAccount.shippingAddress) {
+                [shippingAddressDictionary addEntriesFromDictionary:@{
+                    @"countryCodeAlpha2": tokenizedPayPalAccount.shippingAddress.countryCodeAlpha2 ?: [NSNull null],
+                    @"extendedAddress": tokenizedPayPalAccount.shippingAddress.extendedAddress ?: [NSNull null],
+                    @"locality": tokenizedPayPalAccount.shippingAddress.locality ?: [NSNull null],
+                    @"postalCode": tokenizedPayPalAccount.shippingAddress.postalCode ?: [NSNull null],
+                    @"recipientName": tokenizedPayPalAccount.shippingAddress.recipientName ?: [NSNull null],
+                    @"region": tokenizedPayPalAccount.shippingAddress.region ?: [NSNull null],
+                    @"streetAddress": tokenizedPayPalAccount.shippingAddress.streetAddress ?: [NSNull null],
+                }];
+            }
+            resolve(@{
+                @"nonce": tokenizedPayPalAccount.nonce ?: [NSNull null],
+                @"payerId": tokenizedPayPalAccount.payerID ?: [NSNull null],
+                @"email": tokenizedPayPalAccount.email ?: [NSNull null],
+                @"firstName": tokenizedPayPalAccount.firstName ?: [NSNull null],
+                @"lastName": tokenizedPayPalAccount.lastName ?: [NSNull null],
+                @"phone": tokenizedPayPalAccount.phone ?: [NSNull null],
+                @"billingAddress": billingAddressDictionary,
+                @"shippingAddress": shippingAddressDictionary,
+                @"deviceData": deviceData,
+            });
         }];
     }];
 }

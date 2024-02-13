@@ -8,7 +8,7 @@
 </div>
 
 
-# @ekreative/react-native-braintree
+# react-native-braintree
 
 ## Getting started
 
@@ -115,7 +115,7 @@ In your `AppDelegate.m`:
 ##### Show PayPall module
 
 ```javascript
-import RNBraintree from '@ekreative/react-native-braintree';
+import RNBraintree from 'react-native-braintree';
 
 RNBraintree.showPayPalModule({
     clientToken: 'CLIENT_TOKEN_GENERATED_ON_SERVER_SIDE',
@@ -130,7 +130,7 @@ RNBraintree.showPayPalModule({
 
 ##### Card tokenization
 ```javascript
-import RNBraintree from '@ekreative/react-native-braintree';
+import RNBraintree from 'react-native-braintree';
 
 RNBraintree.tokenizeCard({
     clientToken: 'CLIENT_TOKEN_GENERATED_ON_SERVER_SIDE',
@@ -146,7 +146,7 @@ RNBraintree.tokenizeCard({
 ```
 ##### Make Payment
 ```javascript
-import RNBraintree from '@ekreative/react-native-braintree';
+import RNBraintree from 'react-native-braintree';
 
 RNBraintree.run3DSecureCheck({
     // Optional if you ran `tokenizeCard()` or other Braintree methods before
@@ -171,7 +171,7 @@ RNBraintree.run3DSecureCheck({
 
 ##### Request PayPal billing agreement
 ```javascript
-import RNBraintree from '@ekreative/react-native-braintree';
+import RNBraintree from 'react-native-braintree';
 
 RNBraintree.requestPayPalBillingAgreement({
     clientToken: 'CLIENT_TOKEN_GENERATED_ON_SERVER_SIDE',
@@ -184,13 +184,13 @@ RNBraintree.requestPayPalBillingAgreement({
 ### iOS
 ##### Check if Apple Pay is available
 ```javascript
-import RNBraintree from '@ekreative/react-native-braintree';
+import RNBraintree from 'react-native-braintree';
 
 console.log(RNBraintree.isApplePayAvailable())
 ```
 ##### Make payment using Apple Pay
 ```javascript
-import RNBraintree from '@ekreative/react-native-braintree';
+import RNBraintree from 'react-native-braintree';
 
 RNBraintree.runApplePay({
     clientToken: 'CLIENT_TOKEN_GENERATED_ON_SERVER_SIDE',
@@ -204,7 +204,7 @@ RNBraintree.runApplePay({
 ### Android
 ##### Make payment using Google Pay
 ```javascript
-import RNBraintree from '@ekreative/react-native-braintree';
+import RNBraintree from 'react-native-braintree';
 
 RNBraintree.runGooglePay({
     clientToken: 'CLIENT_TOKEN_GENERATED_ON_SERVER_SIDE',

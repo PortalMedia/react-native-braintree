@@ -201,8 +201,49 @@ public class RNBraintreeModule extends ReactContextBaseJavaModule
             return;
         }
         if (payPalAccountNonce != null) {
-            sendPaymentMethodNonceResult(payPalAccountNonce.getString());
+            sendPaymentMethodDetailResult(payPalAccountNonce);
         }
+    }
+    
+    private void sendPaymentMethodDetailResult(PayPalAccountNonce nonce) {
+        if (mPromise == null) {
+            return;
+        }
+        WritableMap result = Arguments.createMap();
+        result.putString("nonce", nonce.toString());
+        result.putString("payerId", nonce.getPayerId());
+        result.putString("email", nonce.getEmail());
+        result.putString("firstName", nonce.getFirstName());
+        result.putString("lastName", nonce.getLastName());
+        result.putString("phone", nonce.getPhone());
+        result.putString("deviceData", mDeviceData);
+        PostalAddress billingAddress = nonce.getBillingAddress();
+        result.putMap("billingAddress", createAddressMap(billingAddress));
+        PostalAddress shippingAddress = nonce.getShippingAddress();
+        result.putMap("shippingAddress", createAddressMap(shippingAddress));
+        mPromise.resolve(result);
+    }
+
+    private WritableMap createAddressMap(PostalAddress address) {
+        WritableMap addressMap = Arguments.createMap();
+        if (address != null) {
+            addressMap.putString("countryCodeAlpha2", address.getCountryCodeAlpha2());
+            addressMap.putString("extendedAddress", address.getExtendedAddress());
+            addressMap.putString("locality", address.getLocality());
+            addressMap.putString("postalCode", address.getPostalCode());
+            addressMap.putString("recipientName", address.getRecipientName());
+            addressMap.putString("region", address.getRegion());
+            addressMap.putString("streetAddress", address.getStreetAddress());
+        } else {
+            addressMap.putNull("countryCodeAlpha2");
+            addressMap.putNull("extendedAddress");
+            addressMap.putNull("locality");
+            addressMap.putNull("postalCode");
+            addressMap.putNull("recipientName");
+            addressMap.putNull("region");
+            addressMap.putNull("streetAddress");
+        }
+        return addressMap;
     }
 
     @ReactMethod
