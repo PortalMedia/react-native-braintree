@@ -23,6 +23,7 @@ import com.braintreepayments.api.PayPalClient;
 import com.braintreepayments.api.PayPalPaymentIntent;
 import com.braintreepayments.api.PayPalVaultRequest;
 import com.braintreepayments.api.PaymentMethodNonce;
+import com.braintreepayments.api.PostalAddress;
 import com.braintreepayments.api.ThreeDSecureAdditionalInformation;
 import com.braintreepayments.api.ThreeDSecureClient;
 import com.braintreepayments.api.ThreeDSecurePostalAddress;
@@ -132,13 +133,13 @@ public class RNBraintreeModule extends ReactContextBaseJavaModule
         mPromise = promise;
 
         if (!parameters.hasKey("clientToken")) {
-            promise.reject("You must provide a clientToken");
+            promise.reject("MISSING_CLIENT_TOKEN", "You must provide a clientToken");
         } else {
             setup(parameters.getString("clientToken"));
 
             String currency = "USD";
             if (!parameters.hasKey("amount")) {
-                promise.reject("You must provide a amount");
+                promise.reject("MISSING_AMOUNT", "You must provide a amount");
             }
             if (parameters.hasKey("currencyCode")) {
                 currency = parameters.getString("currencyCode");
@@ -204,13 +205,13 @@ public class RNBraintreeModule extends ReactContextBaseJavaModule
             sendPaymentMethodDetailResult(payPalAccountNonce);
         }
     }
-    
+
     private void sendPaymentMethodDetailResult(PayPalAccountNonce nonce) {
         if (mPromise == null) {
             return;
         }
         WritableMap result = Arguments.createMap();
-        result.putString("nonce", nonce.toString());
+        result.putString("nonce", nonce.getString());
         result.putString("payerId", nonce.getPayerId());
         result.putString("email", nonce.getEmail());
         result.putString("firstName", nonce.getFirstName());
@@ -251,13 +252,13 @@ public class RNBraintreeModule extends ReactContextBaseJavaModule
         mPromise = promise;
 
         if (!parameters.hasKey("clientToken")) {
-            promise.reject("You must provide a clientToken");
+            promise.reject("MISSING_CLIENT_TOKEN", "You must provide a clientToken");
         } else {
             setup(parameters.getString("clientToken"));
 
             String currency = "USD";
             if (!parameters.hasKey("amount")) {
-                promise.reject("You must provide a amount");
+                promise.reject("MISSING_AMOUNT", "You must provide a amount");
             }
             if (parameters.hasKey("currencyCode")) {
                 currency = parameters.getString("currencyCode");
@@ -303,7 +304,7 @@ public class RNBraintreeModule extends ReactContextBaseJavaModule
         mPromise = promise;
 
         if (!parameters.hasKey("clientToken")) {
-            promise.reject("You must provide a clientToken");
+            promise.reject("MISSING_CLIENT_TOKEN", "You must provide a clientToken");
         } else {
             setup(parameters.getString("clientToken"));
 
@@ -350,7 +351,7 @@ public class RNBraintreeModule extends ReactContextBaseJavaModule
         if (mBraintreeClient == null) {
             String clientToken = parameters.getString("clientToken");
             if (!parameters.hasKey("clientToken")) {
-                promise.reject("You must provide a clientToken");
+                promise.reject("MISSING_CLIENT_TOKEN", "You must provide a clientToken");
             }
             setup(parameters.getString("clientToken"));
         }
@@ -468,7 +469,7 @@ public class RNBraintreeModule extends ReactContextBaseJavaModule
             if (error instanceof UserCanceledException) {
                 mPromise.reject("USER_CANCELLATION", "The user cancelled");
             }
-            mPromise.reject(error.getMessage());
+            mPromise.reject("ERROR", error.getMessage());
         }
     }
 
