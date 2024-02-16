@@ -71,13 +71,6 @@ repositories {
         // Android JSC is installed from npm
         url "$rootDir/../node_modules/jsc-android/dist"
     }
-    maven {
-        url "https://cardinalcommerceprod.jfrog.io/artifactory/android"
-        credentials {
-            username 'braintree_team_sdk'
-            password 'AKCp8jQcoDy2hxSWhDAUQKXLDPDx6NYRkqrgFLRc3qDrayg6rrCbJpsKKyMwaykVL8FWusJpp'
-        }
-    }
     google()
     jcenter()
 }
@@ -85,12 +78,7 @@ repositories {
 dependencies {
     //noinspection GradleDynamicVersion
     implementation 'com.facebook.react:react-native:+'  // From node_modules
-    implementation 'com.google.android.gms:play-services-wallet:18.1.3'
-    implementation 'com.braintreepayments.api:data-collector:4.38.0'
-    implementation 'com.braintreepayments.api:google-pay:4.38.0'
-    implementation 'com.braintreepayments.api:paypal:4.38.0'
-    implementation 'com.braintreepayments.api:three-d-secure:4.38.0'
-    implementation 'com.braintreepayments.api:card:4.38.0'
+    implementation 'com.braintreepayments.api:paypal:4.41.0'
 }
 
 def configureReactNativePom(def pom) {

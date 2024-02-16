@@ -13,23 +13,6 @@
 ## Getting started
 
 ## Android Specific
-Add this to your `build.gradle`
-
-```groovy
-allprojects {
-    repositories {
-        maven {
-            // Braintree 3D Secure
-            // https://developer.paypal.com/braintree/docs/guides/3d-secure/client-side/android/v4#generate-a-client-token
-            url "https://cardinalcommerceprod.jfrog.io/artifactory/android"
-            credentials {
-                username 'braintree_team_sdk'
-                password 'AKCp8jQcoDy2hxSWhDAUQKXLDPDx6NYRkqrgFLRc3qDrayg6rrCbJpsKKyMwaykVL8FWusJpp'
-            }
-        }
-    }
-}
-```
 
 In Your `AndroidManifest.xml`, `android:allowBackup="false"` can be replaced `android:allowBackup="true"`, it is responsible for app backup.
 
@@ -61,6 +44,7 @@ If your project uses Progurad, add the following lines into `proguard-rules.pro`
 cd ios
 pod install
 ```
+
 ###### Configure a new URL scheme
 Add a bundle url scheme {BUNDLE_IDENTIFIER}.payments in your app Info via XCode or manually in the Info.plist. In your Info.plist, you should have something like: 
 
@@ -79,6 +63,7 @@ Add a bundle url scheme {BUNDLE_IDENTIFIER}.payments in your app Info via XCode 
     </dict>
 </array>
 ```
+
 ###### Update your code
 In your `AppDelegate.m`:
 
@@ -112,7 +97,7 @@ In your `AppDelegate.m`:
 
 ## Usage
 
-##### Show PayPall module
+##### Show PayPal module
 
 ```javascript
 import RNBraintree from 'react-native-braintree';
@@ -125,94 +110,6 @@ RNBraintree.showPayPalModule({
     .then(result => console.log(result))
     .catch((error) => console.log(error));
 
-
-```
-
-##### Card tokenization
-```javascript
-import RNBraintree from 'react-native-braintree';
-
-RNBraintree.tokenizeCard({
-    clientToken: 'CLIENT_TOKEN_GENERATED_ON_SERVER_SIDE',
-    number: '1111222233334444',
-    expirationMonth: '11',
-    expirationYear: '24',
-    cvv: '123',
-    postalCode: '',
-    })
-    .then(result => console.log(result))
-    .catch((error) => console.log(error));
-
-```
-##### Make Payment
-```javascript
-import RNBraintree from 'react-native-braintree';
-
-RNBraintree.run3DSecureCheck({
-    // Optional if you ran `tokenizeCard()` or other Braintree methods before
-    clientToken: 'CLIENT_TOKEN_GENERATED_ON_SERVER_SIDE',
-    nonce: 'CARD_NONCE',
-    amount: '122.00',
-    // Pass as many of the following fields as possible, but they're optional
-    email: 'email@mail.com',
-    firstname: '',
-    lastname: '',
-    phoneNumber: '',
-    streetAddress: '',
-    streetAddress2: '',
-    city: '',
-    region: '',
-    postalCode: '',
-    countryCode: ''
-    })
-    .then(result => console.log(result))
-    .catch((error) => console.log(error));
-```
-
-##### Request PayPal billing agreement
-```javascript
-import RNBraintree from 'react-native-braintree';
-
-RNBraintree.requestPayPalBillingAgreement({
-    clientToken: 'CLIENT_TOKEN_GENERATED_ON_SERVER_SIDE',
-    description: 'BILLING_AGRREEMENT_DESCRIPTION',
-    localeCode: 'LOCALE_CODE'
-    })
-    .then(result => console.log(result))
-    .catch((error) => console.log(error));
-```
-### iOS
-##### Check if Apple Pay is available
-```javascript
-import RNBraintree from 'react-native-braintree';
-
-console.log(RNBraintree.isApplePayAvailable())
-```
-##### Make payment using Apple Pay
-```javascript
-import RNBraintree from 'react-native-braintree';
-
-RNBraintree.runApplePay({
-    clientToken: 'CLIENT_TOKEN_GENERATED_ON_SERVER_SIDE',
-    companyName: 'Company',
-    amount: '100.0',
-    currencyCode: 'EUR'
-    })
-    .then(result => console.log(result))
-    .catch((error) => console.log(error));
-```
-### Android
-##### Make payment using Google Pay
-```javascript
-import RNBraintree from 'react-native-braintree';
-
-RNBraintree.runGooglePay({
-    clientToken: 'CLIENT_TOKEN_GENERATED_ON_SERVER_SIDE',
-    amount: '100.0',
-    currencyCode: 'EUR'
-    })
-    .then(result => console.log(result))
-    .catch((error) => console.log(error));
 ```
 
 ## TODO
