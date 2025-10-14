@@ -78,7 +78,7 @@ repositories {
 dependencies {
     //noinspection GradleDynamicVersion
     implementation 'com.facebook.react:react-native:+'  // From node_modules
-    implementation 'com.braintreepayments.api:paypal:4.41.0'
+    implementation 'com.braintreepayments.api:paypal:4.51.0'
 }
 
 def configureReactNativePom(def pom) {
